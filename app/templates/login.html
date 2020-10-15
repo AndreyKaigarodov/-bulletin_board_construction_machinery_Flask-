@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+    {% block content %}
+        <h2 align = "center">Вход</h1>
+        <hr>
+        <div align = "center">
+            <form action="" method = "post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.login.label }}<br>
+                    {{ form.login(size=32) }}
+                
+                    {% for error in form.login.errors %}
+                        <span style="color: coral;">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}
+                    {% for error in form.password.errors %}
+                        <span style="color: coral;">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </p>
+            
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p>{{ form.submit() }}</p>
+            </form>
+        </div>
+    {% endblock content %}

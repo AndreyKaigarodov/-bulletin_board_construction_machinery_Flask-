@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 align = "center">Регистрация пользователя</h2>
+<hr>
+<div align = "center">
+    <form action="" method= "post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{form.username.label}}<br>
+            {{form.username(size=32)}}<br>  
+            
+            {% for error in form.username.errors %}
+                    <span style="color:dodgerblue;">{{error}}</span>
+            {% endfor %}
+        </p>
+        
+        <p>
+            {{form.company.label}}<br>  
+            {{form.company(size=32)}}<br>  
+            {% for error in form.company.errors %}
+                <span style="color: chocolate;">{{error}}</span>
+            {% endfor %}
+        <p>
+            {{ form.login.label }}<br>
+            {{ form.login(size=32) }}<br>  
+            {% for error in form.login.errors %}
+                <span style="color: coral;">
+                {{error}}
+                </span>
+            {% endfor %}
+        </p>
+        
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>  
+            {% for error in form.password.errors %}
+                <span style="color: coral;">
+                {{error}}
+                </span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=32) }}<br>  
+            {% for error in form.confirm_password.errors %}
+                <span style="color: coral;">
+                {{error}}
+                </span>
+            {% endfor %}
+        </p>
+        <div>{{form.submit()}}</div>
+</div>
+</form>
+{% endblock %}
