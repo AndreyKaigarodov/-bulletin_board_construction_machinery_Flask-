@@ -25,26 +25,20 @@ def mash_list():
     
     return render_template("ListMachin.html")
 
-@app.route("/profile", methods = ["GET", "POST"])
-@login_required
-def profile(login):
-    pass
-
 @app.route('/signin', methods=['GET', 'POST'])
 def registrationUser():
     form = FormRegistationUser()
     if form.validate_on_submit():
-        try: 
-            u = User(username=form.username.data,
-                        login=form.login.data,
-                        password=form.password.data,
-                        company_name=form.company.data)
-            if u.check_login_free():
-                u.add_to_db()
-                flash("Успешно")
-                return redirect('/login')
-        except Exception as e:
-            flash(str(e))
+        u = User(username=form.username.data,
+                    login=form.login.data,
+                    password=form.password.data,
+                    company_name=form.company.data)
+        if u.check_login_free():
+            u.add_to_db()
+            flash("Успешно")
+            return redirect('/login')
+        else:
+            flash("Логин занят")
     return render_template('registrationUser.html', form = form)
 
 
@@ -67,3 +61,12 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route("/profile/<login>", methods = ["GET"])
+@login_required
+def profile(login):
+    if login == current_user.get_val('login'):
+        return "<h1>{}</h1>".format(login)
+    else:
+        return "<h1>{}</h1>".format("Ошибка доступа")

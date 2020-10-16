@@ -17,17 +17,20 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                   <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
                     <li class="nav-item active">
-                      <a class="nav-link" href="{{ url_for('profile') }}">Профиль<span class="sr-only">(current)</span></a>
+                      <a class="nav-link" href="{{ url_for('profile', login = current_user.get_val('login')) }}">Профиль<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">Избранное</a>
                     </li>
-                    {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}">Выход ({{current_user.get_val('login')}})</a>
                     </li>
                     {% else %}
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{{ url_for('profile', login = 'anon')}}">Профиль<span class="sr-only">(current)</span></a>
+                    </li>
                     <li class="nav-item">
                       <a class="nav-link" href="{{ url_for('login') }}">Вход</a>
                     </li>
