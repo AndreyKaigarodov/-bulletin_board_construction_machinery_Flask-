@@ -67,6 +67,6 @@ def logout():
 @login_required
 def profile(login):
     if login == current_user.get_val('login'):
-        return "<h1>{}</h1>".format(login)
+        return render_template("userProfile.html")
     else:
         return "<h1>{}</h1>".format("Ошибка доступа")
