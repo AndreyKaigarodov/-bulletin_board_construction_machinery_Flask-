@@ -27,18 +27,20 @@
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Диалоги</a>
                         </li>
-                        {% if current_user.get_val('is_supplier') == "1" %}
+                   <!--  {% if current_user.get_val('is_supplier') == "" %}-->    
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Техника</a>
                             </li>
-                        {% endif %}
-                    </ul>
+                       <!-- {% endif %}-->    
+                    </ul>s
               </div>
           </div>
           <div class="col-md-2">
-              <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+              <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Edit Profile"/>
           </div>
       </div>
+      <!-- -->
+      <!-- -->
       <div class="row">
           <div class="col-md-4">
               <div class="profile-work">
@@ -70,43 +72,115 @@
                                   <div class="col-md-6">
                                       <p>{{ current_user.get_val('email') }}</p>
                                   </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Телефон: </label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>{{ current_user.get_val('phone_number') }}</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Компания: </label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>{{ current_user.get_val('company_name') }}</p>
-                                  </div>
-                              </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Телефон: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ current_user.get_val('phone_number') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                            <div class="col-md-6">
+                                <label>Компания: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ current_user.get_val('company_name') }}</p>
+                            </div>
+                        </div>
                   </div>
+                  
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                              <div class="row">
-                                  <div class="col-md-8 ">
-                                    <div class="alert alert-secondary" role="alert">
-                                        <li>Тут будут диалоги</li>
-                                    </div>
-                                  </div>
+                            <div class="row">
+                                <div class="col-md-8 ">
+                                <div class="alert alert-secondary" role="alert">
+                                    <li>Тут будут диалоги</li>
+                                </div>
+                                </div>
 
-                                  <div class="col-md-8">
-                                    <div class="alert alert-secondary" role="alert">
-                                        <li>Тут будут диалоги</li>
-                                    </div>
-                                  </div>
+                                <div class="col-md-8">
+                                <div class="alert alert-secondary" role="alert">
+                                    <li>Тут будут диалоги</li>
+                                </div>
+                            </div>
 
-                              </div>           
-                     </div>
-              </div>
-          </div>
-      </div>
-  </form>           
+                        </div>           
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>           
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="ModalEditProfile" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Редактирование профиля</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method = "post" novalidate align="center">
+                {{ form.hidden_tag()}}
+                <div>
+                    {{form.username.label}}<br>
+                    {{form.username(size = 32, value="{} {} {}".format(current_user.get_val('first_name'),
+                    current_user.get_val('last_name'),
+                    current_user.get_val('middle_name')))}}
+                    {% for error in form.username.errors %}
+                        <span style="color: coral;">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+                
+                <div>
+                    {{form.email.label}}<br>
+                    {{form.email(size = 32, value="{}".format(current_user.get_val('email')))}}
+                    {% for error in form.email.errors %}
+                        <span style="color: coral;">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{form.phone_number.label}}<br>
+                    {{form.phone_number(size = 32)}}
+                    {% for error in form.phone_number.errors %}
+                        <span style="color: coral;">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+               
+                <div>
+                    {{form.company.label}}<br>
+                    {{form.company(size = 32)}}
+                    {% for error in form.company.errors %}
+                        <span style="color: coral;">
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+                
+                <div>
+                    {{form.start_be_supplier.label}} {{form.start_be_supplier()}}
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

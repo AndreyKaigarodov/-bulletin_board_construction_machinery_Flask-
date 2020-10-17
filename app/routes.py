@@ -5,9 +5,9 @@ from flask_login import current_user,logout_user, login_user
 from flask_login.utils import login_required
 
 from app import app, login_manager
-from app.forms import LoginForm, FormRegistationUser
+from app.forms import LoginForm, FormRegistationUser, EditProfile
 from app.modules import User, UserLogin
-# роуты путей
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -66,7 +66,8 @@ def logout():
 @app.route("/profile/<login>", methods = ["GET"])
 @login_required
 def profile(login):
+    modalForm = EditProfile()
     if login == current_user.get_val('login'):
-        return render_template("userProfile.html")
+        return render_template("userProfile.html", form = modalForm)
     else:
         return "<h1>{}</h1>".format("Ошибка доступа")
