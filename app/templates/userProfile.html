@@ -21,13 +21,18 @@
                           </h6>
                           <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Информация</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Диалоги</a>
-                      </li>
-                  </ul>
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Информация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Диалоги</a>
+                        </li>
+                        {% if current_user.get_val('is_supplier') == "1" %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Техника</a>
+                            </li>
+                        {% endif %}
+                    </ul>
               </div>
           </div>
           <div class="col-md-2">
@@ -45,7 +50,6 @@
                   <a href="">первая</a><br/>
                   <a href="">вторая</a><br/>
                   <a href="">третья</a><br/>
-                  <a href="">четвертая</a><br/>
               </div>
           </div>
           <div class="col-md-8">
@@ -59,13 +63,12 @@
                                       <p>{{ current_user.get_val('login') }}</p>
                                   </div>
                               </div>
-                              
                               <div class="row">
                                   <div class="col-md-6">
                                       <label>Email</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>NONE</p>
+                                      <p>{{ current_user.get_val('email') }}</p>
                                   </div>
                               </div>
                               <div class="row">
@@ -73,7 +76,7 @@
                                       <label>Телефон: </label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>123 456 7890</p>
+                                      <p>{{ current_user.get_val('phone_number') }}</p>
                                   </div>
                               </div>
                               <div class="row">
@@ -81,58 +84,26 @@
                                       <label>Компания: </label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>Раз двас джисус крайст</p>
+                                      <p>{{ current_user.get_val('company_name') }}</p>
                                   </div>
                               </div>
                   </div>
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                               <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Experience</label>
+                                  <div class="col-md-8 ">
+                                    <div class="alert alert-secondary" role="alert">
+                                        <li>Тут будут диалоги</li>
+                                    </div>
                                   </div>
-                                  <div class="col-md-6">
-                                      <p>Expert</p>
+
+                                  <div class="col-md-8">
+                                    <div class="alert alert-secondary" role="alert">
+                                        <li>Тут будут диалоги</li>
+                                    </div>
                                   </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Hourly Rate</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>10$/hr</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Total Projects</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>230</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>English Level</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>Expert</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Availability</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>6 months</p>
-                                  </div>
-                              </div>
-                      <div class="row">
-                          <div class="col-md-12">
-                              <label>Your Bio</label><br/>
-                              <p>Your detail description</p>
-                          </div>
-                      </div>
-                  </div>
+
+                              </div>           
+                     </div>
               </div>
           </div>
       </div>

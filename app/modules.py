@@ -17,7 +17,7 @@ class db:
         pass
 
 class User():
-    TABLE_NAME = "user_customer"
+    TABLE_NAME = "user"
     
     def __init__(self,login = None, password = None, username = None, company_name = None):
         if username != None:

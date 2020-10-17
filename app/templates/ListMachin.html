@@ -1,10 +1,82 @@
 {% extends "base.html" %}
     {% block content %}
+    <div class="container">
+        <div class="row mb-4" align = "center">
+            <div class="col-sm-4 themed-grid-col">
+                <label for="exampleFormControlSelect1">Вид работ</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="col-sm-4 themed-grid-col">
+                <label for="exampleFormControlSelect1">Тип техники</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                 </select> 
+            </div>
+            <div class="col-sm-4 themed-grid-coll">
+                <label for="exampleFormControlSelect1">Оплата</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>Руб/час</option>
+                    <option>Руб/сутки</option>
+                    <option>Договорная</option>
+                 </select>
+            </div>
+            <div class="col-sm-4 themed-grid-col">
+                <label for="exampleFormControlSelect1">Город</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>Хочу</option>
+                    <option>Пиво</option>
+                    <option></option>
+                 </select>
+            </div>
+            <div class="col-sm-4 themed-grid-col">
+                <label for="exampleFormControlSelect1">Сортировать по</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>Дате</option>
+                    <option>Цене</option>
+                    <option>Просмотрам</option>
+                 </select>
+            </div>
+            <div class="col-sm-4 themed-grid-col">
+                <label for="exampleFormControlSelect1">Применить</label><br>
+                <button class="btn btn-primary btn-md btn-block" type="submit">Поиск</button>
+            </div>
+        </div>
+        <ul class="list-unstyled">
+            <li class="media">
+              <img src="..." class="mr-3" alt="...">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">List-based media object</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </li>
+            <li class="media my-4">
+              <img src="..." class="mr-3" alt="...">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">List-based media object</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </li>
+            <li class="media">
+              <img src="..." class="mr-3" alt="...">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">List-based media object</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </li>
+          </ul>
 
-    <ul>
-        {% for i in range(50) %}
-            <li>post {{i}}</li>
-        {% endfor%}
-    </ul>
+    </div>
+    
+    
 
     {% endblock %}
