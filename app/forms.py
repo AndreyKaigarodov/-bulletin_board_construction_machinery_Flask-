@@ -11,7 +11,7 @@ type_of_machine = [(1, 'Погрузчик'), (2, 'Кран')]
 
 class EditProfile(FlaskForm):
     username = StringField('ФИО', validators=[InputRequired(), Length(min=5, max = 50),Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert") ])
-    phone_number = StringField('Номер телефона')
+    phone_number = StringField('Номер телефона (+7)')
     email = EmailField("Email", validators=[DataRequired(),Email()])
     company = StringField('Компания',validators=[Length(min=0, max = 50),Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert")])
     start_be_supplier = BooleanField("Cтать поставщиком")

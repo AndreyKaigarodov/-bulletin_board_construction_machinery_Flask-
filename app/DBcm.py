@@ -11,9 +11,12 @@ class db:
 
     def add_data():
         pass
-    def upd_data(TABLE_NAME,new_val,search_param):
-        __SQL = "update {} set {} where {} = %s".format(TABLE_NAME, new_val ,search_param)
-        pass
+    def upd_data(TABLE_NAME,new_val,param, param_val):
+        with UseDatabase(dbconfig) as cursor:
+            _SQL = "update {} set {} where {} = %s".format(TABLE_NAME, new_val ,param)
+            cursor.execute(_SQL,(param_val,))
+
+
     def del_data():
         pass
 

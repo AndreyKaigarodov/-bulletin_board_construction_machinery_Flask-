@@ -69,10 +69,14 @@ def logout():
 def profile(login):
     modalForm = EditProfile()
     if modalForm.validate_on_submit():
-        print("валид")
-        print(modalForm.data)
-    else:
-        flash("cal")
+        try:
+            User(login).update_data(phone_number=modalForm.phone_number.data,
+                                    email = modalForm.email.data,
+                                    is_supplier = modalForm.start_be_supplier.data)
+            flash("Успешно")
+            return redirect(url_for('profile')) #нет обновления при применении новых значений, но все работает похоже
+        except Exception as e:
+            pass
     if login == current_user.get_val('login'):
         return render_template("userProfile.html", form = modalForm)
     else:

@@ -6,20 +6,16 @@
       <div class="row">
           <div class="col-md-4">
               <div class="profile-img">
-                  <img src="../static/img/baseProfile.jpg" alt=""/>
+                  <img src="../static/img/baseProfilePhoto.jpg" width="70%" class="img-thumbnail" alt=""/>
               </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-8 align-self-end">
               <div class="profile-head">
                           <h5>
                             {{"{} {} {}".format(current_user.get_val('first_name'),
                             current_user.get_val('last_name'),
                             current_user.get_val('middle_name'))}}
                           </h5>
-                          <h6>
-                              Нзвание компаний
-                          </h6>
-                          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Информация</a>
@@ -35,9 +31,7 @@
                     </ul>
               </div>
           </div>
-          <div class="col-md-2">
-              <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Edit Profile"/>
-          </div>
+          
       </div>
       <!-- -->
       <!-- -->
@@ -48,46 +42,48 @@
                   <a href="">inst</a><br/>
                   <a href="">company</a><br/>
                   <a href="">vk</a>
-                  <p>Ненужная хуйня</p>
+                  <p>Ненужная штука</p>
                   <a href="">первая</a><br/>
                   <a href="">вторая</a><br/>
                   <a href="">третья</a><br/>
               </div>
+              <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Edit Profile"/>
           </div>
+
           <div class="col-md-8">
               <div class="tab-content profile-tab" id="myTabContent">
                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                               <div class="row">
-                                  <div class="col-md-6">
+                                  <div class="col-md-4">
                                       <label>Логин: </label>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div class="col-md-8">
                                       <p>{{ current_user.get_val('login') }}</p>
                                   </div>
                               </div>
                               <div class="row">
-                                  <div class="col-md-6">
+                                  <div class="col-md-4">
                                       <label>Email</label>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div class="col-md-8">
                                       <p>{{ current_user.get_val('email') }}</p>
                                   </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label>Телефон: </label>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <p>{{ current_user.get_val('phone_number') }}</p>
                                 </div>
                             </div>
 
                             <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label>Компания: </label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <p>{{ current_user.get_val('company_name') }}</p>
                             </div>
                         </div>
@@ -95,13 +91,13 @@
                   
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="row">
-                                <div class="col-md-8 ">
+                                <div class="col-md-12 ">
                                 <div class="alert alert-secondary" role="alert">
                                     <li>Тут будут диалоги</li>
                                 </div>
                                 </div>
 
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                 <div class="alert alert-secondary" role="alert">
                                     <li>Тут будут диалоги</li>
                                 </div>
@@ -152,7 +148,7 @@
 
                 <div>
                     {{form.phone_number.label}}<br>
-                    {{form.phone_number(size = 32)}}
+                    {{form.phone_number(size = 32, value = "{}".format(current_user.get_val('phone_number')))}}
                     {% for error in form.phone_number.errors %}
                         <span style="color: coral;"><br>
                             {{error}}
@@ -162,7 +158,7 @@
                
                 <div>
                     {{form.company.label}}<br>
-                    {{form.company(size = 32)}}
+                    {{form.company(size = 32, value = "{}".format(current_user.get_val('company_name')))}}
                     {% for error in form.company.errors %}
                         <span style="color: coral;"><br>
                             {{error}}
@@ -171,7 +167,11 @@
                 </div>
                 
                 <div>
-                    {{form.start_be_supplier.label}} {{form.start_be_supplier()}}
+                    {% if current_user.get_val('is_supplier')|int %}   
+                        {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= True)}}
+                    {% else %}
+                        {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= False)}}
+                    {% endif %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>

@@ -52,13 +52,8 @@ class User():
 
     def update_data(self,**kwargs):
         new_val = str(kwargs)[2:-1].replace(":","=").replace(" ","").replace("'=","=").replace(",'",",") #простите
-        db.upd_data(self.TABLE_NAME, new_val, self.login)
-
-
-          
-
-
-
+        db.upd_data(self.TABLE_NAME, new_val,"login", self.login)
+       
 
     def show_data(self):
         print(self.__dict__)
