@@ -57,16 +57,22 @@ def login():
             flash("Неверный логин или пароль")
     return render_template('login.html', title = "log in", form = form)
 
+
 @app.route("/logout", methods = ['GET','POST'])
 def logout():
     logout_user()
     return redirect(url_for("index"))
 
 
-@app.route("/profile/<login>", methods = ["GET"])
+@app.route("/profile/<login>", methods = ["GET", "POST"])
 @login_required
 def profile(login):
     modalForm = EditProfile()
+    if modalForm.validate_on_submit():
+        print("валид")
+        print(modalForm.data)
+    else:
+        flash("cal")
     if login == current_user.get_val('login'):
         return render_template("userProfile.html", form = modalForm)
     else:

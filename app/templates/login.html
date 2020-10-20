@@ -5,7 +5,7 @@
         <div align = "center">
             <form action="" method = "post" novalidate>
                 {{ form.hidden_tag() }}
-                <p>
+                <div>
                     {{ form.login.label }}<br>
                     {{ form.login(size=32) }}
                 
@@ -14,8 +14,8 @@
                             {{error}}
                         </span>
                     {% endfor %}
-                </p>
-                <p>
+                    </div>
+                <div>
                     {{ form.password.label }}<br>
                     {{ form.password(size=32) }}
                     {% for error in form.password.errors %}
@@ -23,7 +23,7 @@
                             {{error}}
                         </span>
                     {% endfor %}
-                </p>
+                </div>
             
                 <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
                 <p>{{ form.submit() }}</p>

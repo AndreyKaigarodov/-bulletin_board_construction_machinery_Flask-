@@ -1,20 +1,8 @@
-from app.DBcm import UseDatabase
+from app.DBcm import UseDatabase, db
+
 from config import dbconfig
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class db:
-    def get_by(TABLE_NAME,param, value = "null",):
-        with UseDatabase(dbconfig) as cursor:
-            _SQL = "select * from {} where {} = %s".format(TABLE_NAME, param)
-            cursor.execute(_SQL,(value, ))
-            return cursor.fetchall()
-
-    def add_data():
-        pass
-    def upd_data():
-        pass
-    def del_data():
-        pass
 
 class User():
     TABLE_NAME = "user"
@@ -61,6 +49,16 @@ class User():
         if bool(user_data):
             return user_data[0] #возвращаем первый элемент
         return False
+
+    def update_data(self,**kwargs):
+        new_val = str(kwargs)[2:-1].replace(":","=").replace(" ","").replace("'=","=").replace(",'",",") #простите
+        db.upd_data(self.TABLE_NAME, new_val, self.login)
+
+
+          
+
+
+
 
     def show_data(self):
         print(self.__dict__)
