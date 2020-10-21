@@ -2,21 +2,21 @@
 
 {% block content %}
 <div class="container emp-profile">
-  <form method="post">
-      <div class="row">
-          <div class="col-md-4">
-              <div class="profile-img">
-                  <img src="../static/img/baseProfilePhoto.jpg" width="70%" class="img-thumbnail" alt=""/>
-              </div>
-          </div>
-          <div class="col-md-8 align-self-end">
-              <div class="profile-head">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="../static/img/baseProfilePhoto.jpg" width="70%" class="img-thumbnail" alt=""/>
+                </div>
+            </div>
+            <div class="col-md-8 align-self-end">
+                <div class="profile-head">
                           <h5>
                             {{"{} {} {}".format(current_user.get_val('first_name'),
                             current_user.get_val('last_name'),
                             current_user.get_val('middle_name'))}}
                           </h5>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Информация</a>
                         </li>
@@ -25,61 +25,60 @@
                         </li>
                         {% if current_user.get_val('is_supplier')|int %}   
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Техника</a>
+                                <a class="nav-link" id="technics-tab" data-toggle="tab" href="#technics" role="tab" aria-controls="technics" aria-selected="false">Техника</a>
                             </li>
                         {% endif %}
                     </ul>
-              </div>
-          </div>
-          
-      </div>
+                </div>
+            </div>  
+        </div>
       <!-- -->
       <!-- -->
-      <div class="row">
-          <div class="col-md-4">
-              <div class="profile-work">
-                  <p>LINK</p>
-                  <a href="">inst</a><br/>
-                  <a href="">company</a><br/>
-                  <a href="">vk</a>
-                  <p>Ненужная штука</p>
-                  <a href="">первая</a><br/>
-                  <a href="">вторая</a><br/>
-                  <a href="">третья</a><br/>
-              </div>
-              <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Edit Profile"/>
-          </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>LINK</p>
+                    <a href="">inst</a><br/>
+                    <a href="">company</a><br/>
+                    <a href="">vk</a>
+                    <p>Ненужная штука</p>
+                    <a href="">первая</a><br/>
+                    <a href="">вторая</a><br/>
+                    <a href="">третья</a><br/>
+                </div>
+                    <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Изменить профиль"/>
+                </div>
 
-          <div class="col-md-8">
-              <div class="tab-content profile-tab" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                              <div class="row">
-                                  <div class="col-md-4">
-                                      <label>Логин: </label>
-                                  </div>
-                                  <div class="col-md-8">
-                                      <p>{{ current_user.get_val('login') }}</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-4">
-                                      <label>Email</label>
-                                  </div>
-                                  <div class="col-md-8">
-                                      <p>{{ current_user.get_val('email') }}</p>
-                                  </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Логин: </label>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label>Телефон: </label>
-                                </div>
-                                <div class="col-md-8">
-                                    <p>{{ current_user.get_val('phone_number') }}</p>
-                                </div>
+                            <div class="col-md-8">
+                                <p>{{ current_user.get_val('login') }}</p>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{ current_user.get_val('email') }}</p>
+                            </div>
+                        </div>
 
-                            <div class="row">
+                        <div class="row">
+                            <div class="col-md-4">
+                              <label>Телефон: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <p>{{ current_user.get_val('phone_number') }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-4">
                                 <label>Компания: </label>
                             </div>
@@ -87,31 +86,64 @@
                                 <p>{{ current_user.get_val('company_name') }}</p>
                             </div>
                         </div>
-                  </div>
-                  
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                <div class="alert alert-secondary" role="alert">
-                                    <li>Тут будут диалоги</li>
-                                </div>
-                                </div>
+                    </div>
+            
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="row">
+                      <div class="col-md-12 ">
+                          <div class="alert alert-secondary" role="alert">
+                              <li>Тут будут диалоги</li>
+                          </div>
+                      </div>
 
-                                <div class="col-md-12">
-                                <div class="alert alert-secondary" role="alert">
-                                    <li>Тут будут диалоги</li>
-                                </div>
-                            </div>
-
+                      <div class="col-md-12">
+                          <div class="alert alert-secondary" role="alert">
+                              <li>Тут будут диалоги</li>
+                          </div>
+                      </div>      
                         </div>           
                     </div>
+                    <!-- Карты с техникой -->
+                    <div class="tab-pane fade" id="technics" role="tabpanel" aria-labelledby="#technics-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="..." alt="Card image cap">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Card title</h5>
+                                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="..." alt="Card image cap">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Card title</h5>
+                                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <input type="button" class="profile-add-tech-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalAddTechics" value="Добавить технику"/>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                        
                 </div>
             </div>
         </div>
     </form>           
 </div>
 
-  <!-- Modal -->
+  <!-- Modal edit -->
   <div class="modal fade" id="ModalEditProfile" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -156,10 +188,50 @@
                     {% endfor %}
                 </div>
                
+                    <div>
+                        {{form.company.label}}<br>
+                        {{form.company(size = 32, value = "{}".format(current_user.get_val('company_name')))}}
+                        {% for error in form.company.errors %}
+                            <span style="color: coral;"><br>
+                                {{error}}
+                            </span>
+                        {% endfor %}
+                    </div>
+                
+                    <div>
+                        {% if current_user.get_val('is_supplier')|int %}   
+                            {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= True)}}
+                        {% else %}
+                            {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= False)}}
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <input id="submit" name="submit" class="btn btn-primary" type="submit" value="Сохранить">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Modal add-techics -->
+ <div class="modal fade" id="ModalAddTechics" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Добавить технику</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method = "post" novalidate align="center" class = "userForm">
+                {{ formTech.hidden_tag()}}
                 <div>
-                    {{form.company.label}}<br>
-                    {{form.company(size = 32, value = "{}".format(current_user.get_val('company_name')))}}
-                    {% for error in form.company.errors %}
+                    {{formTech.brand.label}}<br>
+                    {{formTech.brand(size = 32)}}
+                    {% for error in formTech.brand.errors %}
                         <span style="color: coral;"><br>
                             {{error}}
                         </span>
@@ -167,20 +239,43 @@
                 </div>
                 
                 <div>
-                    {% if current_user.get_val('is_supplier')|int %}   
-                        {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= True)}}
-                    {% else %}
-                        {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= False)}}
-                    {% endif %}
+                    {{formTech.model.label}}<br>
+                    {{formTech.model(size = 32)}}
+                    {% for error in formTech.model.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <input id="submit" name="submit" class="btn btn-primary" type="submit" value="Сохранить">
-                  </div>
-            </form>
-        </div>
+
+                <div>
+                    {{formTech.discription.label}}<br>
+                    {{formTech.discription(size = 32)}}
+                    {% for error in formTech.discription.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+               
+                    <div>
+                        {{formTech.type_of_machine.label}}<br>
+                        {{formTech.type_of_machine()}}
+                        {% for error in formTech.type_of_machine.errors %}
+                            <span style="color: coral;"><br>
+                                {{error}}
+                            </span>
+                        {% endfor %}
+                    </div>
         
-      </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <input id="submit" name="submit" class="btn btn-primary" type="submit" value="Сохранить">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
 {% endblock %}

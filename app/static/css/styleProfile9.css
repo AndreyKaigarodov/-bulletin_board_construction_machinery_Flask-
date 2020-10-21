@@ -1,3 +1,7 @@
+.card {
+    padding: 2%;
+}
+
 .container {
     margin-top: 3%;
 }
@@ -24,7 +28,21 @@
     font-weight: 600;
     color: #6c757d;
     cursor: pointer;
+   
 }
+
+.profile-add-tech-btn{
+    border: none;
+    border-radius: 0.5rem;
+    width: 70%;
+    padding: 2%;
+    align-self: center;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+    margin-top: 5%;
+}
+
 .proile-rating{
     font-size: 12px;
     color: #818182;

@@ -1,13 +1,22 @@
 from dataclasses import field
+from random import choice
 import email_validator
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SelectField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import EqualTo, InputRequired, Length, Email, DataRequired, Regexp, ValidationError
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import EmailField, IntegerField
 import phonenumbers
 
-type_of_machine = [(1, 'Погрузчик'), (2, 'Кран')]
+default_type_of_machine = [(1, 'Погрузчик'), (2, 'Кран'), (3, "Грузоперевозки")]
+
+class FormAddTechincs(FlaskForm):
+    brand = StringField("Марка машины");
+    model =StringField("Модель");
+    discription = StringField("Дополнительное описание")
+    image = FileField("Выбрать фото")
+    type_of_machine = SelectField("Выбрать тип машины", choices = [(1, 'Погрузчик'), (2, 'Кран'), (3, "Грузоперевозки")])
+    
 
 class EditProfile(FlaskForm):
     username = StringField('ФИО', validators=[InputRequired(), Length(min=5, max = 50),Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert") ])
@@ -34,15 +43,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомни меня')
     submit = SubmitField('Вход')
-
-
-class FormRegistrationTechnics(FlaskForm):
-    type_technics = SelectField('Тип оборудования',validators=[DataRequired()], choices = type_of_machine)
-    brand_technics = StringField('Марка', validators=[DataRequired()])
-    model_technics = StringField('Модель', validators=[DataRequired()])
-    add_submit = SubmitField('Добавить')
-    next_submit = SubmitField('Готово') 
-
+ 
 
 class FormRegistationUser(FlaskForm):
     company = StringField('Компания',validators=[Length(min=0, max = 50),Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert")])

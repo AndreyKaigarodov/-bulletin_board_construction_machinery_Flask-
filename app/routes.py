@@ -5,7 +5,7 @@ from flask_login import current_user,logout_user, login_user
 from flask_login.utils import login_required
 
 from app import app, login_manager
-from app.forms import LoginForm, FormRegistationUser, EditProfile
+from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs
 from app.modules import User, UserLogin
 
 
@@ -68,6 +68,7 @@ def logout():
 @login_required
 def profile(login):
     modalForm = EditProfile()
+    modalAddTechForm = FormAddTechincs()
     if modalForm.validate_on_submit():
         try:
             User(login).update_data(phone_number=modalForm.phone_number.data,
@@ -78,6 +79,8 @@ def profile(login):
         except Exception as e:
             pass
     if login == current_user.get_val('login'):
-        return render_template("userProfile.html", form = modalForm)
+        #_______________КАЖЕТСЯ ЭТО ПЛОХОЙ ВАРИАНТ________________
+        #_______________ПОДУМАЙ___________________________________
+        return render_template("userProfile.html", form = modalForm, formTech = modalAddTechForm)
     else:
         return "<h1>{}</h1>".format("Ошибка доступа")
