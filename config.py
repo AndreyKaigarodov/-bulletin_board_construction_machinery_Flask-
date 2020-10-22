@@ -6,6 +6,6 @@ dbconfig  = {
     'database': 'find_build_techdb',
 }
 class Config():
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'qweqeqweqe'
+    SECRET_KEY = os.environ.get('SECRET_KEY1') or 'qweqeqweqe'
     
    

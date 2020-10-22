@@ -8,14 +8,16 @@ from wtforms.validators import EqualTo, InputRequired, Length, Email, DataRequir
 from wtforms.fields.html5 import EmailField, IntegerField
 import phonenumbers
 
-default_type_of_machine = [(1, 'Погрузчик'), (2, 'Кран'), (3, "Грузоперевозки")]
+default_type_of_machine = [(1, 'Эскаватор колесный'), (2, 'Эскаватор-погрузчик'), 
+                            (3, "Бортовой автомобиль"), (4, "Эскаватор-бульдозер"), 
+                            (5, "Автокран")]# потом я обязательно свяжу с БД
 
 class FormAddTechincs(FlaskForm):
     brand = StringField("Марка машины");
     model =StringField("Модель");
     discription = StringField("Дополнительное описание")
     image = FileField("Выбрать фото")
-    type_of_machine = SelectField("Выбрать тип машины", choices = [(1, 'Погрузчик'), (2, 'Кран'), (3, "Грузоперевозки")])
+    type_of_machine = SelectField("Выбрать тип машины", choices = default_type_of_machine)
     
 
 class EditProfile(FlaskForm):

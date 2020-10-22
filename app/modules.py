@@ -3,6 +3,26 @@ from app.DBcm import UseDatabase, db
 from config import dbconfig
 from werkzeug.security import generate_password_hash, check_password_hash
 
+class Technic():
+    TABLE_NAME = "technics"
+
+    def __init__(self, brand,model,user_id ,
+                type_of_machine_id,discription="Описание отсутствует", image = "baseTechnicPhoto"):
+        self.brand = brand
+        self.model = model
+        self.discription = discription
+        self.type_of_machine_id = type_of_machine_id
+        self.image = image
+        self.user_id = user_id
+    
+    def add_to_db(self):
+        _SQL = """insert into {} 
+                (brand, discription, image, model, type_of_mashin_id, user_id)
+                values(%s, %s, %s ,%s, %s, %s)""".format(self.TABLE_NAME) # тут надо будет переименовать type_of mashin 
+        with UseDatabase(dbconfig) as cursor:
+            cursor.execute(_SQL,(self.brand, self.discription,self.image,
+                                self.model, self.type_of_machine_id, self.user_id,))
+
 
 class User():
     TABLE_NAME = "user"
@@ -49,6 +69,20 @@ class User():
         if bool(user_data):
             return user_data[0] #возвращаем первый элемент
         return False
+
+#Переделать, это для теста
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    def get_mashine(self):
+        _SQL = """select brand, discription, model, type_of_mashin_id from user
+                    left join technics
+                    on user.id = technics.user_id
+                    where login = %s""" # максимально плохой запраос !!!!!!!!
+        with UseDatabase(dbconfig) as cursor:
+            cursor.execute(_SQL,(self.login,))
+            data = cursor.fetchall()
+            return data
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
 
     def update_data(self,**kwargs):
         new_val = str(kwargs)[2:-1].replace(":","=").replace(" ","").replace("'=","=").replace(",'",",") #простите

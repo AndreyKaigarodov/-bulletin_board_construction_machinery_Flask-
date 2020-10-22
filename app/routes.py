@@ -6,7 +6,7 @@ from flask_login.utils import login_required
 
 from app import app, login_manager
 from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs
-from app.modules import User, UserLogin
+from app.modules import Technic, User, UserLogin
 
 
 @login_manager.user_loader
@@ -14,16 +14,16 @@ def load_user(user_id):
     return UserLogin().fromDB(user_id)
 
 
-@app.route("/")
-@app.route("/index")
+@app.route('/')
+@app.route('/index')
 def index():
     return render_template('base.html')
 
-@app.route("/list")
+@app.route('/list')
 @login_required
 def mash_list():
     
-    return render_template("ListMachin.html")
+    return render_template('ListMachin.html')
 
 @app.route('/signin', methods=['GET', 'POST'])
 def registrationUser():
@@ -35,17 +35,17 @@ def registrationUser():
                     company_name=form.company.data)
         if u.check_login_free():
             u.add_to_db()
-            flash("Успешно")
+            flash('Успешно')
             return redirect('/login')
         else:
-            flash("Логин занят")
+            flash('Логин занят')
     return render_template('registrationUser.html', form = form)
 
 
-@app.route("/login", methods = ['GET','POST'])
+@app.route('/login', methods = ['GET','POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("index"))
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User(form.login.data, form.password.data)
@@ -54,33 +54,52 @@ def login():
             login_user(user_login, remember=form.remember_me.data)
             return redirect(url_for('mash_list'))
         else:
-            flash("Неверный логин или пароль")
-    return render_template('login.html', title = "log in", form = form)
+            flash('Неверный логин или пароль')
+    return render_template('login.html', title = 'log in', form = form)
 
 
-@app.route("/logout", methods = ['GET','POST'])
+@app.route('/logout', methods = ['GET','POST'])
 def logout():
     logout_user()
-    return redirect(url_for("index"))
+    return redirect(url_for('index'))
 
 
-@app.route("/profile/<login>", methods = ["GET", "POST"])
+@app.route('/profile/<login>', methods = ['GET', 'POST'])
 @login_required
 def profile(login):
-    modalForm = EditProfile()
-    modalAddTechForm = FormAddTechincs()
-    if modalForm.validate_on_submit():
-        try:
-            User(login).update_data(phone_number=modalForm.phone_number.data,
-                                    email = modalForm.email.data,
-                                    is_supplier = modalForm.start_be_supplier.data)
-            flash("Успешно")
-            return redirect(url_for('profile')) #нет обновления при применении новых значений, но все работает похоже
-        except Exception as e:
-            pass
     if login == current_user.get_val('login'):
-        #_______________КАЖЕТСЯ ЭТО ПЛОХОЙ ВАРИАНТ________________
+        modalForm = EditProfile()
+        if modalForm.validate_on_submit(): #Измненение профиля пользователя
+            try:
+                User(login).update_data(phone_number=modalForm.phone_number.data,
+                                        email = modalForm.email.data,
+                                        is_supplier = modalForm.start_be_supplier.data)
+                flash('Успешно')
+                return redirect(url_for('profile', login = current_user.get_val('login')))
+
+            except Exception as e:
+                pass
+        if int(current_user.get_val('is_supplier')):
+            modalAddTechForm = FormAddTechincs()
+
+            #----------------------------------------
+            #Пробуем выдернуть технику и засунуть в профиль пользователя
+            print(User(login).get_mashine())
+
+
+            #----------------------------------------
+            
+            if  modalAddTechForm.validate_on_submit(): #добавление техники
+                try:
+                    technic = Technic(brand=modalAddTechForm.brand.data, model=modalAddTechForm.model.data,
+                            user_id=current_user.get_val('id'), type_of_machine_id=modalAddTechForm.type_of_machine.data,
+                            discription=modalAddTechForm.discription.data)
+                    technic.add_to_db()
+                except Exception as e:
+                    print(str(e))
+            return render_template('userProfile.html', form = modalForm, formTech = modalAddTechForm)
+        else:
+            return render_template('userProfile.html', form = modalForm, formTech = False)
         #_______________ПОДУМАЙ___________________________________
-        return render_template("userProfile.html", form = modalForm, formTech = modalAddTechForm)
     else:
-        return "<h1>{}</h1>".format("Ошибка доступа")
+        return '<h1>{}</h1>'.format('Ошибка доступа')
