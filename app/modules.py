@@ -93,29 +93,7 @@ class User():
         print(self.__dict__)
 
 
-class UserLogin():
-    def fromDB(self, user_id, db=db):
-        self.__user = db.get_by(TABLE_NAME= User.TABLE_NAME, param = 'id', value= user_id)[0]
-        return self
-    
-    def create(self, user):
-        self.__user = user
-        return self
 
-    def is_authenticated(self):
-        return True
-    
-    def is_active(self):
-        return True
-    
-    def is_anonymous(self):
-        return False
-    
-    def get_id(self):
-        return str(self.__user['id'])
-    
-    def get_val(self, param):
-        return self.__user[param]
 
 
 class UserCustomer():

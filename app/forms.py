@@ -1,5 +1,4 @@
-from dataclasses import field
-from random import choice
+
 import email_validator
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
@@ -48,11 +47,16 @@ class LoginForm(FlaskForm):
  
 
 class FormRegistationUser(FlaskForm):
-    company = StringField('Компания',validators=[Length(min=0, max = 50),Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert")])
-    username = StringField('ФИО', validators=[InputRequired(), Length(min=5, max = 50),Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert"), ])
-    login = StringField('Логин', validators=[InputRequired(), Length(min=3, max = 20),Regexp(r"[a-zA-Z0-9._-]", message= "Login has invalid char")])
-    password = PasswordField('Пароль', validators=[DataRequired(),Length(min=8, max = 50),EqualTo("confirm_password", message="Passwords must match")])
-    confirm_password = PasswordField('Повторите пароль', validators=[EqualTo("password", message="Passwords must match")])
+    company = StringField('Компания',validators=[Length(min=0, max = 50),
+                        Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert")])
+    username = StringField('ФИО', validators=[InputRequired(), Length(min=5, max = 50),
+                        Regexp(r"[а-яА-яa-zA-Z\s]", message= "reg alert"), ])
+    login = StringField('Логин', validators=[InputRequired(), Length(min=3, max = 20),
+                        Regexp(r"[a-zA-Z0-9._-]", message= "Login has invalid char")])
+    password = PasswordField('Пароль', validators=[DataRequired(),Length(min=8, max = 50),
+                        EqualTo("confirm_password", message="Passwords must match")])
+    confirm_password = PasswordField('Повторите пароль', 
+                        validators=[EqualTo("password", message="Passwords must match")])
     submit = SubmitField('Далее')
     
     def validate_username(form, field):

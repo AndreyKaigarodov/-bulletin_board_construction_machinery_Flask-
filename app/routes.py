@@ -4,16 +4,17 @@ from flask.helpers import flash, url_for
 from flask_login import current_user,logout_user, login_user
 from flask_login.utils import login_required
 
-from app import app, login_manager
+from app import app, login_manager, db
 from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs
-from app.modules import Technic, User, UserLogin
-
+from app.modules import Technic#User,  #ТАК ТАК ТАК ТАК ТАК ТАК 
+from app.models import User, UserLogin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @login_manager.user_loader
 def load_user(user_id):
-    return UserLogin().fromDB(user_id)
+    return User.query.get(user_id)
 
-
+#Главная
 @app.route('/')
 @app.route('/index')
 def index():
@@ -25,39 +26,43 @@ def mash_list():
     
     return render_template('ListMachin.html')
 
+#Регистрация
 @app.route('/signin', methods=['GET', 'POST'])
 def registrationUser():
     form = FormRegistationUser()
     if form.validate_on_submit():
-        u = User(username=form.username.data,
-                    login=form.login.data,
-                    password=form.password.data,
-                    company_name=form.company.data)
-        if u.check_login_free():
-            u.add_to_db()
+        if User.query.filter_by(login = form.login.data).first() is None:
+            flm = form.username.data.split()
+            u = User(login=form.login.data,
+                first_name = flm[0],
+                last_name = flm[1],
+                middle_name = flm[2],
+                hash_password=generate_password_hash(form.password.data),
+                company_name=form.company.data)
+            db.session.add(u)
+            db.session.commit()
             flash('Успешно')
             return redirect('/login')
         else:
             flash('Логин занят')
     return render_template('registrationUser.html', form = form)
 
-
+#Вход 
 @app.route('/login', methods = ['GET','POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User(form.login.data, form.password.data)
-        if user.check_login_pass(): #если login и пароль соответствуют пользователю
-            user_login = UserLogin().create(user.get_by_login())
-            login_user(user_login, remember=form.remember_me.data)
+        u = User.query.filter_by(login = form.login.data).first()
+        if u is not None and check_password_hash(u.hash_password, form.password.data): #если login и пароль соответствуют пользователю
+            login_user(u, remember=form.remember_me.data)
             return redirect(url_for('mash_list'))
         else:
             flash('Неверный логин или пароль')
     return render_template('login.html', title = 'log in', form = form)
 
-
+#Выход
 @app.route('/logout', methods = ['GET','POST'])
 def logout():
     logout_user()
