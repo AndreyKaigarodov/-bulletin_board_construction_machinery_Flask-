@@ -55,7 +55,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         u = User.query.filter_by(login = form.login.data).first()
-        if u is not None and check_password_hash(u.hash_password, form.password.data): #если login и пароль соответствуют пользователю
+        if u is not None and check_password_hash(u.hash_password, form.password.data):
             login_user(u, remember=form.remember_me.data)
             return redirect(url_for('mash_list'))
         else:
