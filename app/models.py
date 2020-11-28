@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     is_supplier = db.Column(db.Boolean, default = 0)
 
     posts = db.relationship('Post', backref = 'user', lazy='dynamic')
-    #technics = db.relationship('Technics')
+    technics = db.relationship('Technics', backref = 'user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.login)
@@ -34,7 +34,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     technics_id = db.Column(db.Integer, db.ForeignKey('technics.id') )
 
-class Technics():
+class Technics(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     brand = db.Column(db.String(45), nullable = False)
     model = db.Column(db.String(45), nullable = False)
@@ -43,36 +43,12 @@ class Technics():
 
     posts = db.relationship('Post', backref = 'technics', lazy='dynamic')
     
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     type_of_mashin_id = db.Column(db.Integer, db.ForeignKey('type_of_mashin.id'))
 
     
 
-class type_of_mashin():
+class type_of_mashin(db.Model):
     id = db.Column(db.Integer, primary_key = True, nullable = False)
     type = db.Column(db.String(45))
     technics = db.relationship('Technics', backref = 'type_of_mashin', lazy=True)
-
-class UserLogin():
-    def fromDB(self, user_id, db=db):
-        self.__user = db.get_by(TABLE_NAME= User.TABLE_NAME, param = 'id', value= user_id)[0]
-        return self
-    
-    def create(self, user):
-        self.__user = user
-        return self
-
-    def is_authenticated(self):
-        return True
-    
-    def is_active(self):
-        return True
-    
-    def is_anonymous(self):
-        return False
-    
-    def get_id(self):
-        return self.__user
-    
-    def get_val(self, param):
-        return self.__user[param]

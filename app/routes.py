@@ -7,7 +7,7 @@ from flask_login.utils import login_required
 from app import app, login_manager, db
 from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs
 from app.modules import Technic#User,  #ТАК ТАК ТАК ТАК ТАК ТАК 
-from app.models import User, UserLogin
+from app.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @login_manager.user_loader
@@ -72,26 +72,29 @@ def logout():
 @app.route('/profile/<login>', methods = ['GET', 'POST'])
 @login_required
 def profile(login):
-    if login == current_user.get_val('login'):
+    if login == current_user.login:
         modalForm = EditProfile()
         if modalForm.validate_on_submit(): #Измненение профиля пользователя
             try:
-                User(login).update_data(phone_number=modalForm.phone_number.data,
-                                        email = modalForm.email.data,
-                                        is_supplier = modalForm.start_be_supplier.data)
+                u = User.query.filter_by(login = login).first()
+                #Пока только можно менять параметры ниже
+                u.phone_number=modalForm.phone_number.data
+                u.email = modalForm.email.data
+                u.is_supplier = modalForm.start_be_supplier.data
+                #позже будт обработка исключений, когда доступ к db будеет недоступен
+                db.session.commit()
+
                 flash('Успешно')
-                return redirect(url_for('profile', login = current_user.get_val('login')))
+                return redirect(url_for('profile', login = current_user.login))
 
             except Exception as e:
                 pass
-        if int(current_user.get_val('is_supplier')):
+        if int(current_user.is_supplier):
             modalAddTechForm = FormAddTechincs()
 
             #----------------------------------------
             #Пробуем выдернуть технику и засунуть в профиль пользователя
-            print(User(login).get_mashine())
-
-
+            print(User.technics)
             #----------------------------------------
             
             if  modalAddTechForm.validate_on_submit(): #добавление техники

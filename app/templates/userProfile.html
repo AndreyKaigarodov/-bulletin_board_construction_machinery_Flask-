@@ -12,9 +12,9 @@
             <div class="col-md-8 align-self-end">
                 <div class="profile-head">
                           <h5>
-                            {{"{} {} {}".format(current_user.get_val('first_name'),
-                            current_user.get_val('last_name'),
-                            current_user.get_val('middle_name'))}}
+                            {{"{} {} {}".format(current_user.first_name,
+                            current_user.last_name,
+                            current_user.middle_name)}}
                           </h5>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -23,7 +23,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Диалоги</a>
                         </li>
-                        {% if current_user.get_val('is_supplier')|int %}   
+                        {% if current_user.is_supplier|int %}   
                             <li class="nav-item">
                                 <a class="nav-link" id="technics-tab" data-toggle="tab" href="#technics" role="tab" aria-controls="technics" aria-selected="false">Техника</a>
                             </li>
@@ -46,8 +46,8 @@
                     <a href="">вторая</a><br/>
                     <a href="">третья</a><br/>
                 </div>
-                    <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Изменить профиль"/>
-                </div>
+                    
+            </div>
 
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
@@ -57,7 +57,7 @@
                                 <label>Логин: </label>
                             </div>
                             <div class="col-md-8">
-                                <p>{{ current_user.get_val('login') }}</p>
+                                <p>{{ current_user.login}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -65,7 +65,7 @@
                                 <label>Email</label>
                             </div>
                             <div class="col-md-8">
-                                <p>{{ current_user.get_val('email') }}</p>
+                                <p>{{ current_user.email }}</p>
                             </div>
                         </div>
 
@@ -74,7 +74,7 @@
                               <label>Телефон: </label>
                             </div>
                             <div class="col-md-8">
-                                <p>{{ current_user.get_val('phone_number') }}</p>
+                                <p>{{ current_user.phone_number }}</p>
                             </div>
                         </div>
 
@@ -83,7 +83,12 @@
                                 <label>Компания: </label>
                             </div>
                             <div class="col-md-8">
-                                <p>{{ current_user.get_val('company_name') }}</p>
+                                <p>{{ current_user.company_name}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Изменить профиль"/>
                             </div>
                         </div>
                     </div>
@@ -158,9 +163,9 @@
                 {{ form.hidden_tag()}}
                 <div>
                     {{form.username.label}}<br>
-                    {{form.username(size = 32, value="{} {} {}".format(current_user.get_val('first_name'),
-                    current_user.get_val('last_name'),
-                    current_user.get_val('middle_name')))}}
+                    {{form.username(size = 32, value="{} {} {}".format(current_user.first_name,
+                    current_user.last_name,
+                    current_user.middle_name))}}
                     {% for error in form.username.errors %}
                         <span style="color: coral;"><br>
                             {{error}}
@@ -170,7 +175,7 @@
                 
                 <div>
                     {{form.email.label}}<br>
-                    {{form.email(size = 32, value="{}".format(current_user.get_val('email')))}}
+                    {{form.email(size = 32, value="{}".format(current_user.email))}}
                     {% for error in form.email.errors %}
                         <span style="color: coral;"><br>
                             {{error}}
@@ -180,7 +185,7 @@
 
                 <div>
                     {{form.phone_number.label}}<br>
-                    {{form.phone_number(size = 32, value = "{}".format(current_user.get_val('phone_number')))}}
+                    {{form.phone_number(size = 32, value = "{}".format(current_user.phone_number))}}
                     {% for error in form.phone_number.errors %}
                         <span style="color: coral;"><br>
                             {{error}}
@@ -190,7 +195,7 @@
                
                     <div>
                         {{form.company.label}}<br>
-                        {{form.company(size = 32, value = "{}".format(current_user.get_val('company_name')))}}
+                        {{form.company(size = 32, value = "{}".format(current_user.company_name))}}
                         {% for error in form.company.errors %}
                             <span style="color: coral;"><br>
                                 {{error}}
@@ -199,7 +204,7 @@
                     </div>
                 
                     <div>
-                        {% if current_user.get_val('is_supplier')|int %}   
+                        {% if current_user.is_supplier|int %}   
                             {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= True)}}
                         {% else %}
                             {{form.start_be_supplier.label}} {{form.start_be_supplier(checked= False)}}
