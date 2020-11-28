@@ -8,48 +8,49 @@
                 <div class="profile-img">
                     <img src="../static/img/baseProfilePhoto.jpg" width="70%" class="img-thumbnail" alt=""/>
                 </div>
-            </div>
-            <div class="col-md-8 align-self-end">
-                <div class="profile-head">
-                          <h5>
-                            {{"{} {} {}".format(current_user.first_name,
-                            current_user.last_name,
-                            current_user.middle_name)}}
-                          </h5>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Информация</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Диалоги</a>
-                        </li>
-                        {% if current_user.is_supplier|int %}   
-                            <li class="nav-item">
-                                <a class="nav-link" id="technics-tab" data-toggle="tab" href="#technics" role="tab" aria-controls="technics" aria-selected="false">Техника</a>
-                            </li>
-                        {% endif %}
-                    </ul>
+            </div> 
+            <div class="col-md-8">
+                <div class="row">
+                    <h5>
+                        {{"{} {} {}".format(current_user.first_name,
+                        current_user.last_name,
+                        current_user.middle_name)}}
+                    </h5> <br>
                 </div>
-            </div>  
+                <div class="row"><p>Активные объявления: 0</p></div>
+                <div class="row"><p>Количество техники: 0</p></div>
+                <div class="row"> <p>Число просмотров: 20</p></div>
+                <div class="row"> <p>Новых Сообщений: 1</p></div>
+
+            </div>
         </div>
       <!-- -->
+      <div class="row">
+        <div class="col-md-12 align-self-end">
+            <div class="profile-head">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Информация</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Диалоги</a>
+                    </li>
+                    {% if current_user.is_supplier|int %}   
+                        <li class="nav-item">
+                            <a class="nav-link" id="technics-tab" data-toggle="tab" href="#technics" role="tab" aria-controls="technics" aria-selected="false">Техника</a>
+                        </li>
+                        <!--Объявления, нужно немного покрутить -->
+                        <li class="nav-item">
+                            <a class="nav-link" id="technics-tab" data-toggle="tab" href="#technics" role="tab" aria-controls="technics" aria-selected="false">Мои объявления</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div> 
+      </div>
       <!-- -->
         <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work">
-                    <p>LINK</p>
-                    <a href="">inst</a><br/>
-                    <a href="">company</a><br/>
-                    <a href="">vk</a>
-                    <p>Ненужная штука</p>
-                    <a href="">первая</a><br/>
-                    <a href="">вторая</a><br/>
-                    <a href="">третья</a><br/>
-                </div>
-                    
-            </div>
-
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
@@ -87,54 +88,47 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <input type="button" class="profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEditProfile" value="Изменить профиль"/>
                             </div>
                         </div>
                     </div>
             
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                  <div class="row">
-                      <div class="col-md-12 ">
-                          <div class="alert alert-secondary" role="alert">
-                              <li>Тут будут диалоги</li>
-                          </div>
-                      </div>
-
-                      <div class="col-md-12">
-                          <div class="alert alert-secondary" role="alert">
-                              <li>Тут будут диалоги</li>
-                          </div>
-                      </div>      
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-md-12 profile-message-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Сообщение от пользователя1</h5>
+                                      <p class="card-text">Добрый день, до Новоуральска поедем? </p>
+                                      <a href="#" class="btn btn-primary">Ответить</a>
+                                    </div>
+                                </div>
+                            </div>     
                         </div>           
                     </div>
                     <!-- Карты с техникой -->
                     <div class="tab-pane fade" id="technics" role="tabpanel" aria-labelledby="#technics-tab">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top" src="..." alt="Card image cap">
-                                    <div class="card-body">
-                                      <h5 class="card-title">Card title</h5>
-                                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <!-- Цикл с техникой-->
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="card-img-top" src="../static/img/baseTechPhoto.jpg" width="70%" alt="Card image cap">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top" src="..." alt="Card image cap">
-                                    <div class="card-body">
-                                      <h5 class="card-title">Card title</h5>
-                                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Card title</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 ">
+                            <div class="col-md-4 ">
                                 <input type="button" class="profile-add-tech-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalAddTechics" value="Добавить технику"/>
                             </div>
                         </div>

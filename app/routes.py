@@ -6,8 +6,8 @@ from flask_login.utils import login_required
 
 from app import app, login_manager, db
 from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs
-from app.modules import Technic#User,  #ТАК ТАК ТАК ТАК ТАК ТАК 
-from app.models import User
+#from app.modules import Technic, User,  #ТАК ТАК ТАК ТАК ТАК ТАК 
+from app.models import User, Technics
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @login_manager.user_loader
@@ -68,7 +68,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
+#Профиль
 @app.route('/profile/<login>', methods = ['GET', 'POST'])
 @login_required
 def profile(login):
@@ -83,10 +83,8 @@ def profile(login):
                 u.is_supplier = modalForm.start_be_supplier.data
                 #позже будт обработка исключений, когда доступ к db будеет недоступен
                 db.session.commit()
-
                 flash('Успешно')
                 return redirect(url_for('profile', login = current_user.login))
-
             except Exception as e:
                 pass
         if int(current_user.is_supplier):
@@ -99,15 +97,18 @@ def profile(login):
             
             if  modalAddTechForm.validate_on_submit(): #добавление техники
                 try:
-                    technic = Technic(brand=modalAddTechForm.brand.data, model=modalAddTechForm.model.data,
-                            user_id=current_user.get_val('id'), type_of_machine_id=modalAddTechForm.type_of_machine.data,
-                            discription=modalAddTechForm.discription.data)
-                    technic.add_to_db()
+                    technic = Technics(brand=modalAddTechForm.brand.data,
+                        model=modalAddTechForm.model.data,
+                        user_id=current_user.id, 
+                        type_of_mashin_id=modalAddTechForm.type_of_machine.data,
+                        discription=modalAddTechForm.discription.data)
+                    db.session.add(technic)
+                    db.session.commit()
                 except Exception as e:
-                    print(str(e))
+                    print(e)
             return render_template('userProfile.html', form = modalForm, formTech = modalAddTechForm)
         else:
             return render_template('userProfile.html', form = modalForm, formTech = False)
         #_______________ПОДУМАЙ___________________________________
-    else:
+    else: 
         return '<h1>{}</h1>'.format('Ошибка доступа')
