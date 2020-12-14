@@ -38,7 +38,7 @@ class Technics(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     brand = db.Column(db.String(45), nullable = False)
     model = db.Column(db.String(45), nullable = False)
-    discription = db.Column(db.String(45), nullable = False)
+    discription = db.Column(db.String(100), nullable = False)
     image = db.Column(db.String(100), default = "baseTechics.png")
 
     posts = db.relationship('Post', backref = 'technics', lazy='dynamic')

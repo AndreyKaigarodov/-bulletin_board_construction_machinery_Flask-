@@ -1,9 +1,26 @@
 
+
 .profile-message-card{
     margin-top:0.5%;
     margin-bottom: 0.5%;
 }
+.profile-technics-card{
+    margin-top:0.5%;
+    margin-bottom: 0.5%;
+}
 
+.userForm div{
+    padding-bottom: 2%;
+
+}
+select {
+    width: 80%; /* Ширина списка в пикселах */
+}
+
+.card-img-tech{
+    width: 70%;
+    padding-bottom: 2%;
+}
 
 .alert {
     
@@ -15,7 +32,7 @@
  }
 
  .submitButton{
-     width: 120px;
+    width: 120px;
  }
 
 .card {

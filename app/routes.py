@@ -5,7 +5,7 @@ from flask_login import current_user,logout_user, login_user
 from flask_login.utils import login_required
 
 from app import app, login_manager, db
-from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs
+from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs, FormAddPost
 #from app.modules import Technic, User,  #ТАК ТАК ТАК ТАК ТАК ТАК 
 from app.models import User, Technics
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -74,6 +74,7 @@ def logout():
 def profile(login):
     if login == current_user.login:
         modalForm = EditProfile()
+        
         if modalForm.validate_on_submit(): #Измненение профиля пользователя
             try:
                 u = User.query.filter_by(login = login).first()
@@ -87,14 +88,23 @@ def profile(login):
                 return redirect(url_for('profile', login = current_user.login))
             except Exception as e:
                 pass
+       
         if int(current_user.is_supplier):
             modalAddTechForm = FormAddTechincs()
-
+            modalAddPostForm = FormAddPost()
             #----------------------------------------
             #Пробуем выдернуть технику и засунуть в профиль пользователя
-            print(User.technics)
+            '''
+            t = Technics.query.filter_by(user_id = current_user.id).first()
+            print(t.brand)
+            for i in list(current_user.technics):
+                print(i.brand, i.user_id)
+            '''
             #----------------------------------------
-            
+            list_tech = list(current_user.technics)
+            modalAddPostForm.choice_tech.choices = [(i.id, "{}: {}".format(i.brand,i.model)) for i in list_tech]
+
+
             if  modalAddTechForm.validate_on_submit(): #добавление техники
                 try:
                     technic = Technics(brand=modalAddTechForm.brand.data,
@@ -106,7 +116,22 @@ def profile(login):
                     db.session.commit()
                 except Exception as e:
                     print(e)
-            return render_template('userProfile.html', form = modalForm, formTech = modalAddTechForm)
+            
+            if modalAddPostForm.validate_on_submit():
+                try:
+                    print(modalAddPostForm.choice_city.choices)
+                    print(modalAddPostForm.choice_tech.choices)
+                    print(modalAddPostForm.choice_city)
+                    print(modalAddPostForm.choice_tech)
+                    pass
+                except:
+                    pass
+            
+            #print(modalAddPostFor
+            return render_template('userProfile.html', form = modalForm, 
+                                    formTech = modalAddTechForm, 
+                                    cardsTech = list_tech,
+                                    formPost = modalAddPostForm)
         else:
             return render_template('userProfile.html', form = modalForm, formTech = False)
         #_______________ПОДУМАЙ___________________________________

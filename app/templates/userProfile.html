@@ -41,7 +41,7 @@
                         </li>
                         <!--Объявления, нужно немного покрутить -->
                         <li class="nav-item">
-                            <a class="nav-link" id="technics-tab" data-toggle="tab" href="#technics" role="tab" aria-controls="technics" aria-selected="false">Мои объявления</a>
+                            <a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="false">Мои объявления</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -93,7 +93,8 @@
                             </div>
                         </div>
                     </div>
-            
+
+                    <!-- Раздел сообщений-->
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
                             <div class="col-md-12 profile-message-card">
@@ -107,35 +108,52 @@
                             </div>     
                         </div>           
                     </div>
+
                     <!-- Карты с техникой -->
                     <div class="tab-pane fade" id="technics" role="tabpanel" aria-labelledby="#technics-tab">
-                        <div class="row">
+                        
                             <!-- Цикл с техникой-->
-                            <div class="card">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img class="card-img-top" src="../static/img/baseTechPhoto.jpg" width="70%" alt="Card image cap">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            {% for card in cardsTech %}
+                            <div class="row">
+                                <div class="col-md-12 profile-message-card">
+                                    <div class="card ">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <img class="card-img-tech" src="../static/img/baseTechPhoto.jpg" alt="Card image cap">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ card.brand }} {{card.model}}</h5>
+                                                    <h6 class="card-text">{{card.discription[:100]}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <a href="#" class="btn btn-primary">Редактировать</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            {% endfor %}
 
                         <div class="row">
                             <div class="col-md-4 ">
                                 <input type="button" class="profile-add-tech-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalAddTechics" value="Добавить технику"/>
                             </div>
-                        </div>
-                        
-                        
+                        </div>          
                     </div>
-                        
+                    
+                    <!-- Карты с постами-->
+                    <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="#posts-tab">
+                        <div class="row">
+                            <div class="col-md-4 ">
+                                <input type="button" class="profile-add-tech-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalAddPost" value="Добавить объявление"/>
+                            </div>
+                        </div>
+                    </div>     
+
                 </div>
             </div>
         </div>
@@ -213,6 +231,93 @@
         </div>
     </div>
 </div>
+
+<!-- Modal add post -->
+<div class="modal fade" id="ModalAddPost" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Добавить объявление</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method = "post" novalidate align="center" class = "userForm">
+                {{ formPost.hidden_tag()}}
+                <div>
+                    {{formPost.choice_tech.label}}<br>
+                    {{formPost.choice_tech(cols = "10")}}
+                    {% for error in formPost.choice_tech.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{formPost.type_of_job.label}}<br>
+                    {{formPost.type_of_job()}}
+                    {% for error in formPost.type_of_job.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{formPost.choice_city.label}}<br>
+                    {{formPost.choice_city(cols = "10")}}
+                    {% for error in formPost.choice_city.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+
+               
+                <div>
+                    {{formPost.price.label}}<br>
+                    {{formPost.price(size = 7)}}
+                    {% for error in formPost.type_of_job.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+                
+                <div>
+                    {{formPost.measure_price.label}}<br>
+                    {{formPost.measure_price()}}
+                    {% for error in formPost.measure_price.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{formPost.discription.label}}<br>
+                    {{formPost.discription(cols="50", rows = "5")}}
+                    {% for error in formPost.discription.errors %}
+                        <span style="color: coral;"><br>
+                            {{error}}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <input id="submit" name="submit" class="btn btn-primary" type="submit" value="Сохранить">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
  <!-- Modal add-techics -->
  {% if formTech %}
