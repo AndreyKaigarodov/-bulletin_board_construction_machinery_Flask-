@@ -5,9 +5,14 @@ from flask_login import current_user,logout_user, login_user
 from flask_login.utils import login_required
 
 from app import app, login_manager, db
-from app.forms import LoginForm, FormRegistationUser, EditProfile, FormAddTechincs, FormAddPost
+
+from app.forms import (LoginForm, FormRegistationUser, 
+                        EditProfile, FormAddTechincs, 
+                        FormAddPost, default_city,
+                        default_type_of_measure, default_type_of_job,
+                        default_type_of_machine) #<-НУЖНО ПОМЕНЯТЬ
 #from app.modules import Technic, User,  #ТАК ТАК ТАК ТАК ТАК ТАК 
-from app.models import User, Technics
+from app.models import User, Technics, Post
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @login_manager.user_loader
@@ -75,6 +80,8 @@ def profile(login):
     if login == current_user.login:
         modalForm = EditProfile()
         
+        print(request.form)
+
         if modalForm.validate_on_submit(): #Измненение профиля пользователя
             try:
                 u = User.query.filter_by(login = login).first()
@@ -92,26 +99,17 @@ def profile(login):
         if int(current_user.is_supplier):
             modalAddTechForm = FormAddTechincs()
             modalAddPostForm = FormAddPost()
-            #----------------------------------------
-            #Пробуем выдернуть технику и засунуть в профиль пользователя
-            '''
-            t = Technics.query.filter_by(user_id = current_user.id).first()
-            print(t.brand)
-            for i in list(current_user.technics):
-                print(i.brand, i.user_id)
-            '''
-            #----------------------------------------
+
             list_tech = list(current_user.technics)
             modalAddPostForm.choice_tech.choices = [(i.id, "{}: {}".format(i.brand,i.model)) for i in list_tech]
-
-
+            
             if  modalAddTechForm.validate_on_submit(): #добавление техники
                 try:
                     technic = Technics(brand=modalAddTechForm.brand.data,
-                        model=modalAddTechForm.model.data,
-                        user_id=current_user.id, 
-                        type_of_mashin_id=modalAddTechForm.type_of_machine.data,
-                        discription=modalAddTechForm.discription.data)
+                                        model=modalAddTechForm.model.data,
+                                        user_id=current_user.id, 
+                                        type_of_mashin_id=modalAddTechForm.type_of_machine.data,
+                                        discription=modalAddTechForm.discription.data)
                     db.session.add(technic)
                     db.session.commit()
                 except Exception as e:
@@ -119,15 +117,20 @@ def profile(login):
             
             if modalAddPostForm.validate_on_submit():
                 try:
-                    print(modalAddPostForm.choice_city.choices)
-                    print(modalAddPostForm.choice_tech.choices)
-                    print(modalAddPostForm.choice_city)
-                    print(modalAddPostForm.choice_tech)
-                    pass
-                except:
-                    pass
-            
-            #print(modalAddPostFor
+                    
+                    post = Post(price = modalAddPostForm.price.data,
+                                type_of_job = default_type_of_job[int(modalAddPostForm.type_of_job.data)][1],
+                                measure_price = default_type_of_measure[int(modalAddPostForm.measure_price.data)][1],
+                                discription = modalAddPostForm.discription.data,
+                                technics_id =  modalAddPostForm.choice_tech.data, #тут id шник лежит получается
+                                city = default_city[int(modalAddPostForm.choice_city.data)][1], #плохо плохо все из-за default листов
+                                user_id = current_user.id)
+                    db.session.add(post)
+                    db.session.commit()
+                    
+                except Exception as e:
+                    print(e)
+
             return render_template('userProfile.html', form = modalForm, 
                                     formTech = modalAddTechForm, 
                                     cardsTech = list_tech,

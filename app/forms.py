@@ -2,24 +2,29 @@
 import email_validator
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SelectField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import EqualTo, InputRequired, NumberRange, Length, Email, DataRequired, Regexp, ValidationError, Optional
+from wtforms import (StringField, SelectField, 
+                    PasswordField, BooleanField, 
+                    SubmitField, TextAreaField)
+from wtforms.validators import (EqualTo, InputRequired, 
+                                NumberRange, Length, 
+                                Email, DataRequired, 
+                                Regexp, ValidationError)
 from wtforms.fields.html5 import EmailField, IntegerField
 import phonenumbers
 
-default_type_of_machine = [(1, 'Эскаватор колесный'), (2, 'Эскаватор-погрузчик'), 
-                            (3, "Бортовой автомобиль"), (4, "Эскаватор-бульдозер"), 
-                            (5, "Автокран")]# потом я обязательно свяжу с БД
+default_type_of_machine = [(0, 'Эскаватор колесный'), (1, 'Эскаватор-погрузчик'), 
+                            (2, "Бортовой автомобиль"), (3, "Эскаватор-бульдозер"), 
+                            (4, "Автокран")]# потом я обязательно свяжу с БД
 
-default_type_of_job = [(1, 'Погрузочные работы'), (2, 'Перевоз стоительной техники'), 
-                            (3, "Перевоз строительных материалов"), (4, "Грузоперевозки"), 
-                            (5, "Другое")]# потом я обязательно свяжу с БД
+default_type_of_job = [(0, 'Погрузочные работы'), (1, 'Перевоз стоительной техники'), 
+                            (2, "Перевоз строительных материалов"), (3, "Грузоперевозки"), 
+                            (4, "Другое")]# потом я обязательно свяжу с БД
 
-default_type_of_measure = [(1, 'Руб/час'), (2, 'Руб/сутки'), 
-                            (3, "Договорная")]
+default_type_of_measure = [(0, 'Руб/час'), (1, 'Руб/сутки'), 
+                            (2, "Договорная")]
 
-default_city = [(15, 'Екатеринбург'), (2, 'Курган'), 
-                            (34, "Тюмень")]
+default_city = [(0, 'Екатеринбург'), (1, 'Курган'), 
+                            (2, "Тюмень")]
 
 
 class FormAddTechincs(FlaskForm):
@@ -34,12 +39,12 @@ class FormAddPost(FlaskForm):
     price = IntegerField('Цена услуги',validators=[InputRequired(), NumberRange(min=0, message="Введите число больше 0")])
     type_of_job = SelectField('Вид работ', choices = default_type_of_job,validators=[InputRequired()])
     measure_price =  SelectField('Тип оплаты', choices = default_type_of_measure,validators=[InputRequired()])
-    choice_tech = SelectField('Выбор техники',validators=[Optional()])
-    choice_city = SelectField('Выбор города',choices = default_city, validators=[InputRequired()])
+    choice_tech = SelectField('Выбор техники', validators=[InputRequired()])
+    choice_city = SelectField('Выбор города', choices = default_city, validators=[InputRequired()])
     discription = TextAreaField("Описание", validators=[InputRequired(),Length(min=10, max = 200),
                                                         Regexp(r"[а-яА-яa-zA-Z\s]",
                                                         message= "Использовать буквы")])
-    city = SelectField("Город", choices=default_city);
+
 
     
 class EditProfile(FlaskForm):

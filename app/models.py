@@ -28,8 +28,9 @@ class Post(db.Model):
     data = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     price = db.Column(db.Integer, nullable = False)
     type_of_job = db.Column(db.String(45), nullable = False)
-    discription = db.Column(db.String(100), nullable = True)
+    discription = db.Column(db.String(200), nullable = True)
     measure_price = db.Column(db.String(45), nullable = False)
+    city = db.Column(db.String(45), nullable = False) #так делать плохо, лучше создать таблицу с id для городах
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     technics_id = db.Column(db.Integer, db.ForeignKey('technics.id') )
