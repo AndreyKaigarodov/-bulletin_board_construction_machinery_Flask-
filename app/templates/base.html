@@ -20,14 +20,14 @@
         <ul class="navbar-nav">
             {% if current_user.is_authenticated %}
             <li class="nav-item active">
-              <a class="nav-link" href="{{ url_for('profile', login = current_user.get_val('login')) }}">Профиль<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ url_for('profile', login = current_user.login) }}">Профиль<span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="#">Избранное</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('logout') }}">Выход ({{current_user.get_val('login')}})</a>
+              <a class="nav-link" href="{{ url_for('logout') }}">Выход ({{current_user.login}})</a>
             </li>
             
             {% else %}

@@ -1,3 +1,43 @@
+<<<<<<< HEAD
+=======
+
+
+.profile-message-card{
+    margin-top:0.5%;
+    margin-bottom: 0.5%;
+}
+.profile-technics-card{
+    margin-top:0.5%;
+    margin-bottom: 0.5%;
+}
+
+.userForm div{
+    padding-bottom: 2%;
+
+}
+select {
+    width: 80%; /* Ширина списка в пикселах */
+}
+
+.card-img-tech{
+    width: 70%;
+    padding-bottom: 2%;
+}
+
+.alert {
+    
+    width:30%;  
+    margin-left: auto;
+    margin-right: auto;
+    align-content: center;
+    text-align: center;
+ }
+
+ .submitButton{
+    width: 120px;
+ }
+
+>>>>>>> dev
 .card {
     padding: 2%;
 }
